@@ -6,3 +6,9 @@ variable "AWS_REGION" {
   description = "The default AWS region"
   default     = "ap-southeast-2" # Asia Pacific (Sydney)
 }
+
+# AWS global resource variable definition
+variable "ENV" {
+  description = "Specify the environment: 'dev' or 'prod'"
+  type        = "string"
+}
