@@ -2,7 +2,6 @@
 # Classic ELB resource configuration
 resource "aws_elb" "elb" {
   name = "elb-${var.ENV}"
-  availability_zones = ["${var.AWS_REGION}a", "${var.AWS_REGION}b"]
   subnets = ["${aws_subnet.dmz-subnet-1.id}", "${aws_subnet.dmz-subnet-2.id}"]
 #  security_groups = []
 
