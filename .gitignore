@@ -1,3 +1,4 @@
 terraform.*
 *.log
 /.terraform
+backend.tf
