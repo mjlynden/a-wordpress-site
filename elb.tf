@@ -3,7 +3,7 @@
 resource "aws_elb" "elb" {
   name = "elb-${var.ENV}"
   subnets = ["${aws_subnet.dmz-subnet-1.id}", "${aws_subnet.dmz-subnet-2.id}"]
-#  security_groups = []
+  security_groups = ["${aws_security_group.elb_secgroup.id}"]
 
   listener {
     instance_port = 80
