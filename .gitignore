@@ -2,3 +2,4 @@ terraform.*
 *.log
 /.terraform
 backend.tf
+wordpress_ec2*

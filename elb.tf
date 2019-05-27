@@ -20,7 +20,7 @@ resource "aws_elb" "elb" {
     interval = "30"
   }
 
-  cross_zone_load_balancing = true # Default is 'true' but defining it explicitly
+  cross_zone_load_balancing = true # Default is 'true'; defining it explicitly
   connection_draining = true
   connection_draining_timeout = 300
 
@@ -28,4 +28,11 @@ resource "aws_elb" "elb" {
     Name = "elb-${var.ENV}"
     Environment = "${var.ENV}"
   }
+}
+
+# Attach Wordpress EC2 instance(s) to ELB
+resource "aws_elb_attachment" "elb_wordpress_ec2" {
+  depends_on = ["aws_instance.wordpress_ec2"] # Create EC2 instance before attempting to attach to ELB
+  elb = "${aws_elb.elb.id}"
+  instance = "${aws_instance.wordpress_ec2.id}"
 }
