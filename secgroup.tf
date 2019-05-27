@@ -15,9 +15,9 @@ resource "aws_security_group" "elb_secgroup" {
 
   # This rule needs to be explicitly defined as Terraform removes the AWS default egress rule
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all traffic outbound"
   }
@@ -43,9 +43,9 @@ resource "aws_security_group" "instance_secgroup" {
 
   # This rule needs to be explicitly defined as Terraform removes the AWS default egress rule
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all traffic outbound"
   }
@@ -71,9 +71,9 @@ resource "aws_security_group" "instance_secgroup" {
 
     # This rule needs to be explicitly defined as Terraform removes the AWS default egress rule
     egress {
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
       description = "Allow all traffic outbound"
     }

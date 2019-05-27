@@ -25,6 +25,7 @@ resource "aws_subnet" "dmz-subnet-1" {
   tags {
     Name = "${var.ENV}-dmz-subnet-1"
     Environment = "${var.ENV}"
+    Layer = "dmz"
   }
 }
 
@@ -35,6 +36,7 @@ resource "aws_subnet" "dmz-subnet-2" {
   tags {
     Name = "${var.ENV}-dmz-subnet-2"
     Environment = "${var.ENV}"
+    Layer = "dmz"
   }
 }
 
@@ -45,6 +47,7 @@ resource "aws_subnet" "app-subnet-1" {
   tags {
     Name = "${var.ENV}-app-subnet-1"
     Environment = "${var.ENV}"
+    Layer = "app"
   }
 }
 
@@ -55,6 +58,7 @@ resource "aws_subnet" "app-subnet-2" {
   tags {
     Name = "${var.ENV}-app-subnet-2"
     Environment = "${var.ENV}"
+    Layer = "app"
   }
 }
 

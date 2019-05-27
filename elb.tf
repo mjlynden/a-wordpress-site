@@ -33,6 +33,7 @@ resource "aws_elb" "elb" {
 # Attach Wordpress EC2 instance(s) to ELB
 resource "aws_elb_attachment" "elb_wordpress_ec2" {
   depends_on = ["aws_instance.wordpress_ec2"] # Create EC2 instance before attempting to attach to ELB
+  count = "${lookup(var.INSTANCE_COUNT, var.ENV)}" # See vars.tf
   elb = "${aws_elb.elb.id}"
-  instance = "${aws_instance.wordpress_ec2.id}"
+  instance = "${element(aws_instance.wordpress_ec2.*.id, count.index)}"
 }

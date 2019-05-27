@@ -1,12 +1,24 @@
 
+# Subnet IDs data source configuration
+data "aws_subnet_ids" "app_subnets" {
+  vpc_id = "${aws_vpc.vpc.id}"
+  depends_on = ["aws_subnet.app-subnet-1", "aws_subnet.app-subnet-2"] # The application subnet IDs cannot be retrieved until they are created
+
+  tags = {
+    Layer = "app"
+  }
+}
+
 # EC2 resource configuration
 resource "aws_instance" "wordpress_ec2" {
   ami = "${lookup(var.AMI_ID, var.AWS_REGION)}" # See vars.tf
-  instance_type = "${var.ENV == "dev" ? "t2.micro" : "t3.small"}" # If DEV; use smaller instance
+  instance_type = "${lookup(var.INSTANCE_TYPE, var.ENV)}" # See vars.tf
+  count = "${lookup(var.INSTANCE_COUNT, var.ENV)}" # See vars.tf
   key_name = "${aws_key_pair.wordpress_ec2_keypair.key_name}" # Specified for SSH access if required; will require Elastic IP and Security Group updates
 #  associate_public_ip_address = "" # Required for SSH access
-  subnet_id = "${aws_subnet.app-subnet-1.id}"
+  subnet_id = "${element(data.aws_subnet_ids.app_subnets.ids, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.instance_secgroup.id}"]
+#  user_data = "${file("bootstrap_ec2.sh")}" # Bootstrap script to install/configure apache, php, etc.
 
   root_block_device {
     volume_type = "gp2" # General Purpose SSD
@@ -14,15 +26,13 @@ resource "aws_instance" "wordpress_ec2" {
     delete_on_termination = true # Volume will be destroyed on termination
   }
 
-#  user_data = ""
-
   tags {
-    Name = "wordpress-ec2-${var.ENV}-1"
+    Name = "wordpress-ec2-${var.ENV}-${count.index + 1}"
     Environment = "${var.ENV}"
   }
 
   volume_tags {
-    Name = "wordpress-ec2-${var.ENV}-1"
+    Name = "wordpress-ec2-${var.ENV}-${count.index + 1}"
     Environment = "${var.ENV}"
   }
 }
