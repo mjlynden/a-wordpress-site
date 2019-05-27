@@ -51,3 +51,36 @@ variable "PATH_TO_PUBLIC_KEY" {
   description = "The name of the public key file in working directory"
   default = "wordpress_ec2.pub"
 }
+
+# AWS RDS instance type variable definition
+variable "DB_INSTANCE_SIZE" {
+  description = "The RDS instance type to use per environment"
+  type = "map"
+  default = {
+    dev = "db.t2.micro"
+    prod = "db.t2.medium"
+  }
+}
+
+# AWS RDS volume size variable definition
+variable "DB_VOL_SIZE" {
+  description = "The RDS volume size to use per environment"
+  type = "map"
+  default = {
+    dev = 25 # GiB
+    prod = 100 # GiB (best IOPS balance)
+  }
+}
+
+# AWS RDS multi-az variable definition
+variable "DB_MULTI_AZ" {
+  description = "The RDS multi-az attribute to use per environment"
+  type = "map"
+  default = {
+    dev = "false"
+    prod = "true" # Cross-AZ HA configuration
+  }
+}
+
+# AWS RDS password variable definition (prompted unless supplied at command line)
+variable "RDS_PASSWORD" {}

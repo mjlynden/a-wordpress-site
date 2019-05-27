@@ -2,7 +2,7 @@
 # Subnet IDs data source configuration
 data "aws_subnet_ids" "app_subnets" {
   vpc_id = "${aws_vpc.vpc.id}"
-  depends_on = ["aws_subnet.app-subnet-1", "aws_subnet.app-subnet-2"] # The application subnet IDs cannot be retrieved until they are created
+  depends_on = ["aws_subnet.app_subnet_1", "aws_subnet.app_subnet_2"] # The application subnet IDs cannot be retrieved until they are created
 
   tags = {
     Layer = "app"
@@ -18,8 +18,6 @@ resource "aws_instance" "wordpress_ec2" {
 #  associate_public_ip_address = "" # Required for SSH access
   subnet_id = "${element(data.aws_subnet_ids.app_subnets.ids, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.instance_secgroup.id}"]
-#  user_data = "${file("bootstrap_ec2.sh")}" # Bootstrap script to install/configure apache, php, etc.
-
   root_block_device {
     volume_type = "gp2" # General Purpose SSD
     volume_size = 20 # Size in gibibytes, upgraded from the default 8 GiB
@@ -27,12 +25,12 @@ resource "aws_instance" "wordpress_ec2" {
   }
 
   tags {
-    Name = "wordpress-ec2-${var.ENV}-${count.index + 1}"
+    Name = "wordpress-ec2-${var.ENV}"
     Environment = "${var.ENV}"
   }
 
   volume_tags {
-    Name = "wordpress-ec2-${var.ENV}-${count.index + 1}"
+    Name = "wordpress-ec2-${var.ENV}"
     Environment = "${var.ENV}"
   }
 }

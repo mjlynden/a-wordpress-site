@@ -1,8 +1,8 @@
 
 # Classic ELB resource configuration
 resource "aws_elb" "elb" {
-  name = "elb-${var.ENV}"
-  subnets = ["${aws_subnet.dmz-subnet-1.id}", "${aws_subnet.dmz-subnet-2.id}"]
+  name = "wordpress-elb-${var.ENV}"
+  subnets = ["${aws_subnet.dmz_subnet_1.id}", "${aws_subnet.dmz_subnet_2.id}"]
   security_groups = ["${aws_security_group.elb_secgroup.id}"]
 
   listener {
@@ -25,7 +25,7 @@ resource "aws_elb" "elb" {
   connection_draining_timeout = 300
 
   tags = {
-    Name = "elb-${var.ENV}"
+    Name = "wordpress-elb-${var.ENV}"
     Environment = "${var.ENV}"
   }
 }

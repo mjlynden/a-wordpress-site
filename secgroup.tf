@@ -56,8 +56,8 @@ resource "aws_security_group" "instance_secgroup" {
   }
 }
 
-  resource "aws_security_group" "database_secgroup" {
-    name = "database-secgroup-${var.ENV}"
+  resource "aws_security_group" "db_secgroup" {
+    name = "db-secgroup-${var.ENV}"
     description = "Security group for database"
     vpc_id = "${aws_vpc.vpc.id}"
 
@@ -79,7 +79,7 @@ resource "aws_security_group" "instance_secgroup" {
     }
 
     tags {
-      Name = "database-secgroup-${var.ENV}"
+      Name = "db-secgroup-${var.ENV}"
       Environment = "${var.ENV}"
     }
 }
