@@ -18,7 +18,7 @@ The following resources will be created for either development (dev) or producti
 1) Create yourself a ssh-keypair
 `ssh-keygen -f wordpress_ec2`
 
-2) Supply your AWS credentials within a new file *'terraform.tfvars'*
+2) Supply your AWS credentials within a new file *__'terraform.tfvars'__*
 
 3) Setup Terraform
 `terraform init`
