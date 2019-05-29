@@ -18,7 +18,7 @@ variable "AMI_ID" {
   description = "The AMI IDs to use per region"
   type = "map"
   default = {
-    ap-southeast-2 = "ami-0fc740bda78beedac" # CentOS Linux 6 x86_64 HVM EBS ENA 1901_01
+    ap-southeast-2 = "ami-0b32b57ccd633703b" # amzn2-ami-hvm-2.0.20190508-x86_64-ebs
   }
 }
 

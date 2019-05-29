@@ -41,6 +41,14 @@ resource "aws_security_group" "instance_secgroup" {
     description = "Open HTTP inbound access from ELB"
   }
 
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Should be locked down to an administrator(s) IP
+    description = "Open SSH inbound access"
+  }
+
   # This rule needs to be explicitly defined as Terraform removes the AWS default egress rule
   egress {
     from_port = 0
