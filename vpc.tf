@@ -2,6 +2,8 @@
 # VPC resource configuration
 resource "aws_vpc" "vpc" {
   cidr_block = "10.1.0.0/16"
+  enable_dns_support = "true" # Default is 'true'; defining it explicitly
+  enable_dns_hostnames = "true" # Default is 'false'; required for EFS mounting
   tags {
     Name = "vpc-${var.ENV}"
     Environment = "${var.ENV}"

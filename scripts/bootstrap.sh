@@ -7,6 +7,11 @@ sudo yum update -y
 sudo yum install -y httpd
 sudo amazon-linux-extras install -y php7.3
 sudo yum install -y mysql
+sudo yum install -y nfs-utils
+
+# Prepare the EFS mount
+sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport "${EFS_MOUNT}":/   /var/www/html
+echo "${EFS_ID}:/ /var/www/html nfs4 defaults,_netdev 0 0" >> /etc/fstab
 
 # Set the appropriate permissions on /var/www
 sudo usermod -a -G apache ec2-user

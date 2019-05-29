@@ -49,6 +49,14 @@ resource "aws_security_group" "instance_secgroup" {
     description = "Open SSH inbound access"
   }
 
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    self = "true"
+    description = "Open ALL inbound access from this security group"
+  }
+
   # This rule needs to be explicitly defined as Terraform removes the AWS default egress rule
   egress {
     from_port = 0

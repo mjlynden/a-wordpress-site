@@ -9,6 +9,7 @@ data "aws_subnet_ids" "app_subnets" {
   }
 }
 
+# EC2 resource configuration
 data "template_file" "bootstrap_script" {
   template = "${file("scripts/bootstrap.sh")}"
 
@@ -16,16 +17,18 @@ data "template_file" "bootstrap_script" {
     ROOT_PWD = "${var.RDS_PASSWORD}"
     DB_HOST = "${aws_db_instance.db.address}"
     WP_DB_HOST = "${aws_db_instance.db.endpoint}" # Includes port number
+    EFS_MOUNT = "${aws_efs_file_system.efs.dns_name}"
+    EFS_ID = "${aws_efs_file_system.efs.id}"
   }
 }
 
 resource "aws_instance" "wordpress_ec2" {
-  depends_on = ["aws_db_instance.db"] # The database should be available before the application can connect to it
+  depends_on = ["aws_db_instance.db", "aws_efs_file_system.efs"] # The database and file system should be available before the application can connect to it
   ami = "${lookup(var.AMI_ID, var.AWS_REGION)}" # See vars.tf
   instance_type = "${lookup(var.INSTANCE_TYPE, var.ENV)}" # See vars.tf
   count = "${lookup(var.INSTANCE_COUNT, var.ENV)}" # See vars.tf
   key_name = "${aws_key_pair.wordpress_ec2_keypair.key_name}" # Required for SSH access
-  associate_public_ip_address = "true" # Required for SSH access (including access for file provisioner)
+  associate_public_ip_address = "true" # Required for SSH access
   subnet_id = "${element(data.aws_subnet_ids.app_subnets.ids, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.instance_secgroup.id}"]
   user_data = "${data.template_file.bootstrap_script.rendered}"
