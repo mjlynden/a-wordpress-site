@@ -32,8 +32,8 @@ The following resources will be created for either development (dev) or producti
 `terraform apply -var ENV=dev` or `terraform apply -var ENV=prod`
 
 5) The following outputs will be supplied on successful build:
- * ELB endpoint
- * EC2 IP(s)
+ * ELB endpoint - for accessing the website
+ * EC2 IP(s) - for accessing the instance(s) via ssh
 
  6) When complete:  
  `terraform destroy -var ENV=dev` or `terraform destroy -var ENV=prod`
