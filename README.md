@@ -3,7 +3,7 @@
 
 ## Overview
 This project will create a Wordpress site for development or production purposes within AWS.
-Note: Production will utilise larger resources than development.
+**Note:** Production will utilise larger resources than development.
 
 ## Resources
 The following resources will be created for either development (dev) or production (prod), depending on user selection. In the case of production, more than one resource of a particular type below will be created.
