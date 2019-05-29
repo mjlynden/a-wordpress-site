@@ -2,7 +2,7 @@
 ### Based on Terraform
 
 ## Overview
-This project will create a Wordpress site for development or production purposes within AWS.
+This project will create a Wordpress site for development or production purposes within AWS.  
 **Note:** Production will utilise larger resources than development.
 
 ## Resources
@@ -28,7 +28,7 @@ The following resources will be created for either development (dev) or producti
 `terraform init`
 
 4) Apply Terraform (you will be prompted to supply a password for the RDS database):  
-`terraform plan` followed by:  
+`terraform plan -var ENV=dev` or `terraform plan -var ENV=dev`  followed by:  
 `terraform apply -var ENV=dev` or `terraform apply -var ENV=prod`
 
 5) The following outputs will be supplied on successful build:
